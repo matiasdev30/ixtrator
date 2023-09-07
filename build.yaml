@@ -1,0 +1,13 @@
+targets:
+  ixtrator:ixtrator:
+    builders:
+      ixtrator|codeGeneratorBuilder:
+        enabled: True
+
+builders:
+  codeGeneratorBuilder:
+    import: 'package:ixtrator/ixtrator.dart'
+    builder_factories: ['codeGeneratorBuilder']
+    build_extensions: { '.igen': ['.igen.dart']}
+    build_to: source
+    auto_apply: root_package
