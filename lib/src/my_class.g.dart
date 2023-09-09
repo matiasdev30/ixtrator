@@ -6,4 +6,6 @@ part of 'my_class.dart';
 // CodeGenerator
 // **************************************************************************
 
-abstract class Person {}
+abstract class IPerson {
+  void sayHello();
+}
