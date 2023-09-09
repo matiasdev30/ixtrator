@@ -8,6 +8,8 @@ builders:
   codeGeneratorBuilder:
     import: 'package:ixtrator/ixtrator.dart'
     builder_factories: ['codeGeneratorBuilder']
-    build_extensions: { '.igen': ['.igen.dart']}
+    build_extensions: {".dart":  ["ixtrator.g.part"]}
     build_to: source
     auto_apply: root_package
+    applies_builders: ["source_gen|combining_builder"]
+    

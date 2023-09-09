@@ -1,6 +1,5 @@
 
 import 'package:source_gen/source_gen.dart';
-import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 
@@ -23,13 +22,10 @@ class CodeGenerator
 }
 
 
-
 class GenerateClassStructure {
   final String title;
   const GenerateClassStructure(this.title);
-
 String generate(ClassElement classElement) {
-  final className = classElement.name;
   final methods = classElement.methods.where((methodElement) =>
       methodElement.kind == ElementKind.CONSTRUCTOR ||
       (methodElement.kind == ElementKind.METHOD &&
@@ -38,9 +34,9 @@ String generate(ClassElement classElement) {
   StringBuffer classStructure = StringBuffer();
 
   // Use the provided title as the class name
-  classStructure.writeln('abstract class Ix$title {');
+  classStructure.writeln('abstract class I$title {');
 
-  methods.forEach((methodElement) {
+  for (var methodElement in methods) {
     // Get the method name
     String methodName = methodElement.name;
 
@@ -55,24 +51,38 @@ String generate(ClassElement classElement) {
 
     // Get the parameters and keywords
     List<String> parameters = [];
-    methodElement.parameters.forEach((paramElement) {
+    for (var paramElement in methodElement.parameters) {
       final paramName = paramElement.name;
       final paramType =
-          paramElement.type?.getDisplayString(withNullability: false) ??
-              'dynamic';
-      parameters.add('$paramType $paramName');
-    });
+          paramElement.type.getDisplayString(withNullability: false);
+      String paramDetails = '$paramType $paramName';
+
+      // Check for default values
+      if (paramElement.defaultValueCode != null) {
+        paramDetails = '$paramDetails = ${paramElement.defaultValueCode}';
+      }
+
+      // Check for named parameters and enclose them in curly braces
+      if (paramElement.isNamed) {
+        paramDetails = '{required $paramDetails}';
+      }
+
+      parameters.add(paramDetails);
+    }
 
     classStructure.writeln('  ${isConstructor ? '' : '$returnType '}$methodName(${parameters.join(', ')});');
-  });
+  }
 
   classStructure.writeln('}');
   return classStructure.toString();
 }
 
 
+
 }
 
+
+/*
 @GenerateClassStructure("MyClassRepository")
 class MyClass {
   Stream<String> myMethod(int param1, {String param2 = 'default'}) {
@@ -87,14 +97,8 @@ class MyClass {
 
   void simpleVoid() {}
 
-  @override
-  String toString() {
-    return super.toString();
-  }
-
-  @override
-  void asssi() {}
+ 
 }
 
-
+*/
 
