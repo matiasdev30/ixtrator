@@ -2,7 +2,7 @@
 
 
 <h1 align="center">[Abstract Class Code Generator for DART]-[Dart]-[FLutter]
-<br />Xtrator</h1>
+<br />iXtrator</h1>
 
 <!-- PROJECT LOGO -->
 <br />
