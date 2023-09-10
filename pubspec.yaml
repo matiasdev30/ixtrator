@@ -1,7 +1,8 @@
 name: ixtrator
 description: A sample command-line application.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+publish_to: 'https://pub.dev'
+repository: https://github.com/matiasdev30/ixtrator
 
 environment:
   sdk: ^3.0.3
