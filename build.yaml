@@ -1,11 +1,5 @@
-targets:
-  ixtrator:ixtrator:
-    builders:
-      ixtrator|ixtratorGenerator:
-        enabled: True
-
 builders:
-  ixtratorGenerator:
+  ixtratorBuilder:
     import: 'package:ixtrator/ixtrator.dart'
     builder_factories: ['ixtratorBuilder']
     build_extensions: {".dart":  ["ixtrator.g.part"]}

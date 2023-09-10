@@ -10,7 +10,7 @@ import 'dart:io' as _i7;
 
 final _builders = <_i1.BuilderApplication>[
   _i1.apply(
-    r'ixtrator:ixtratorGenerator',
+    r'ixtrator:ixtratorBuilder',
     [_i2.ixtratorBuilder],
     _i1.toRoot(),
     hideOutput: false,
