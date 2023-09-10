@@ -4,6 +4,7 @@ part 'example_usage.g.dart';
 @GenerateClassStructure()
 class ExampleClass implements IExampleClass{
   // Method 1: Future with return and arguments
+  @override
   Future<int> multiply(int a, int b) async {
     await Future.delayed(Duration(seconds: 1));
     return a * b;
@@ -11,6 +12,7 @@ class ExampleClass implements IExampleClass{
 
   // Method 2: Stream with return and arguments
   
+  @override
   Stream<int> countNumbers(int start, int end) async* {
     for (int i = start; i <= end; i++) {
       await Future.delayed(Duration(milliseconds: 500));
@@ -20,18 +22,21 @@ class ExampleClass implements IExampleClass{
 
   // Method 3: Void with required arguments
   
+  @override
   void greet({required String name}) {
     print('Hello, $name!');
   }
 
   // Method 4: Void without arguments
   
+  @override
   void sayHello() {
     print('Hello, world!');
   }
 
   // Method 5: Future with return and no arguments
   
+  @override
   Future<String> fetchMessage() async {
     await Future.delayed(Duration(seconds: 2));
     return 'Hello from the future!';
@@ -39,6 +44,7 @@ class ExampleClass implements IExampleClass{
 
   // Method 6: Stream with return and no arguments
   
+  @override
   Stream<String> generateMessages() async* {
     for (int i = 0; i < 5; i++) {
       await Future.delayed(Duration(seconds: 1));
@@ -48,12 +54,14 @@ class ExampleClass implements IExampleClass{
 
   // Method 7: Chaining Future methods
   
+  @override
   Future<int> add(int a, int b) async {
     await Future.delayed(Duration(seconds: 1));
     return a + b;
   }
 
   
+  @override
   Future<int> subtract(int a, int b) async {
     await Future.delayed(Duration(seconds: 1));
     return a - b;
@@ -84,6 +92,7 @@ class ExampleClass implements IExampleClass{
 
   // Method 10: Stream with async* for a range
   
+  @override
   Stream<int> generateNumbersInRange(int start, int end) async* {
     for (int i = start; i <= end; i++) {
       await Future.delayed(Duration(milliseconds: 500));
@@ -92,6 +101,7 @@ class ExampleClass implements IExampleClass{
   }
   // Method 11: Future with generic types and lists of objects as parameters and return
   
+  @override
   Future<List<String>> processItems<T>(List<T> items, {String separator = ','}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = items.map((item) => item.toString()).join(separator);
@@ -99,6 +109,7 @@ class ExampleClass implements IExampleClass{
   }
 
   // Method 12: Stream with generic types and lists of objects as parameters and return
+  @override
   Stream<List<int>> generateRandomLists<T>(List<T> items) async* {
     for (int i = 0; i < 5; i++) {
       await Future.delayed(Duration(seconds: 1));
@@ -140,6 +151,7 @@ class Person {
 @GenerateClassStructure()
 class MyClass implements IMyClass{
   
+  @override
   Stream<String> myMethod(int param1, {String param2 = 'default'}) {
     return Stream.empty();
   }
