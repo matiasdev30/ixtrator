@@ -11,7 +11,7 @@ environment:
 dependencies:
   path: ^1.8.0
   ixtrator:
-    path: ../ixtrator
+    path: ../../ixtrator
   
 dev_dependencies:
   lints: ^2.0.0

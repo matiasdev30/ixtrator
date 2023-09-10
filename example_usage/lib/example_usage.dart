@@ -148,7 +148,7 @@ class MyClass implements IMyClass{
   Future<void> myM34(param1, {required param2}) async {}
 
   
-  List<DateTime> logos() {
+  List<DateTime> dates() {
     return [];
   }
 
