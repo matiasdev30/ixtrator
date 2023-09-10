@@ -1,5 +1,5 @@
 
-import 'ixtrator_builder.dart';
+import 'generete_class_structure.dart';
 part 'my_class.g.dart';
 
 @GenerateClassStructure()
