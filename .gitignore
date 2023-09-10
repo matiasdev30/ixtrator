@@ -1,0 +1,27 @@
+# Arquivos de compilação Dart
+.dart_tool/
+.build/
+.packages
+.pub/
+*.dart.js
+*.dart.js.map
+
+# Arquivos gerados pelo ambiente de desenvolvimento
+.idea/
+.vscode/
+*.iml
+
+# Dependências específicas do projeto (ajuste conforme necessário)
+pubspec.lock
+
+# Arquivos de configuração do Flutter (se estiver usando Flutter)
+/flutter_app/.dart_tool/
+/flutter_app/.pub/
+/flutter_app/build/
+/flutter_app/ios/Pods/
+/flutter_app/ios/Flutter/Generated.xcconfig
+/flutter_app/android/app/src/main/flutter_assets/
+
+# Logs e saída de construção
+/log/
+/build/

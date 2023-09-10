@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 
 
-class CodeGenerator
+class IxtratorGenerator
     extends GeneratorForAnnotation<GenerateClassStructure> {
   @override
   String generateForAnnotatedElement(
@@ -12,7 +12,7 @@ class CodeGenerator
     if (element is ClassElement) {
       final className = element.name;
 
-      final generator = GenerateClassStructure();
+      final generator = GenerateClassStructure(title: className);
       final classStructure = generator.generate(element);
 
       return classStructure;
@@ -27,77 +27,89 @@ class GenerateClassStructure {
   // Modify the constructor to accept the class name
   const GenerateClassStructure({this.title = ""});
 
-  String generate(ClassElement classElement) {
-    final methods = classElement.methods.where((methodElement) =>
-        methodElement.kind == ElementKind.CONSTRUCTOR ||
-        (methodElement.kind == ElementKind.METHOD &&
-            methodElement.metadata.isEmpty));
+String generate(ClassElement classElement) {
+  final methods = classElement.methods.where((methodElement) =>
+      methodElement.kind == ElementKind.CONSTRUCTOR ||
+      (methodElement.kind == ElementKind.METHOD &&
+          methodElement.metadata.isEmpty));
 
-    StringBuffer classStructure = StringBuffer();
+  final typeParameters = classElement.typeParameters;
+  final hasGenerics = typeParameters.isNotEmpty;
+  final genericType = hasGenerics
+      ? '<${typeParameters.map((tp) => tp.name).join(', ')}>'
+      : '';
 
-    // Use the provided title as the class name
-    classStructure.writeln('abstract class I$title {');
+  StringBuffer classStructure = StringBuffer();
 
-    for (var methodElement in methods) {
-      // Get the method name
-      String methodName = methodElement.name;
+  // Use the provided title as the class name
+  var className = '${title}${hasGenerics ? genericType : ''}';
+  for (var methodElement in methods) {
+  if (methodElement.typeParameters.isNotEmpty) {
+    className += "<T>";
+    break;
+  }
+  }
 
-      // Check if it's a constructor
-      bool isConstructor = methodElement.kind == ElementKind.CONSTRUCTOR;
 
-      // Get the return type for methods (not constructors)
-      String returnType = isConstructor
-          ? ''
-          : methodElement.returnType?.getDisplayString(withNullability: false) ??
-              'dynamic';
+  classStructure.writeln(
+      'abstract class I$className {');
 
-      // Get the parameters and keywords
-      List<String> parameters = [];
-      for (var paramElement in methodElement.parameters) {
-        final paramName = paramElement.name;
-        final paramType =
-            paramElement.type.getDisplayString(withNullability: false);
-        String paramDetails = '$paramType $paramName';
+  for (var methodElement in methods) {
+    // Get the method name
+    String methodName = methodElement.name;
 
-        // Check for default values
-        if (paramElement.defaultValueCode != null) {
-          paramDetails = '$paramDetails = ${paramElement.defaultValueCode}';
-        }
+    // Check if it's a constructor
+    bool isConstructor = methodElement.kind == ElementKind.CONSTRUCTOR;
 
-        // Check for named parameters and enclose them in curly braces
-        if (paramElement.isNamed) {
-          paramDetails = '{required $paramDetails}';
-        }
+    // Get the return type for methods (not constructors)
+    String returnType = isConstructor
+        ? ''
+        : methodElement.returnType?.getDisplayString(withNullability: false) ??
+            'dynamic';
 
-        parameters.add(paramDetails);
+    // Get the parameters and keywords
+    List<String> parameters = [];
+    List<String> namedParameters = [];
+
+    for (var paramElement in methodElement.parameters) {
+      final paramName = paramElement.name;
+      final paramType = paramElement.type.getDisplayString(withNullability: false);
+      String paramDetails = '$paramType $paramName';
+
+      // Check for default values
+      if (paramElement.defaultValueCode != null) {
+        paramDetails = '$paramDetails = ${paramElement.defaultValueCode}';
       }
 
-      classStructure.writeln(
-          '  ${isConstructor ? '' : '$returnType '}$methodName(${parameters.join(', ')});');
+      // Check for named parameters and add 'required' if necessary
+      if (paramElement.isNamed) {
+        if (paramElement.isRequiredNamed) {
+          paramDetails = 'required $paramDetails';
+        }
+        namedParameters.add(paramDetails);
+      } else {
+        parameters.add(paramDetails);
+      }
     }
 
-    classStructure.writeln('}');
-    return classStructure.toString();
+    if (namedParameters.isNotEmpty) {
+      parameters.add('{${namedParameters.join(', ')}}');
+    }
+
+    // Check if the method has generic parameters and add them
+    if (methodElement.typeParameters.isNotEmpty) {
+      methodName = '$methodName<${methodElement.typeParameters.map((tp) => tp.name).join(', ')}>';
+    }
+
+    classStructure.writeln(
+        '  ${isConstructor ? '' : '$returnType '}$methodName(${parameters.join(', ')});');
   }
+  
+
+  classStructure.writeln('}');
+  return classStructure.toString();
 }
 
-/*
-@GenerateClassStructure("MyClassRepository")
-class MyClass {
-  Stream<String> myMethod(int param1, {String param2 = 'default'}) {
-    return Stream.empty();
-  }
 
-  Future<void> myM34(param1, {required param2}) async {}
-
-  List<DateTime> logos() {
-    return [];
-  }
-
-  void simpleVoid() {}
-
- 
 }
-
-*/
 

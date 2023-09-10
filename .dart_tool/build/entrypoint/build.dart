@@ -10,8 +10,8 @@ import 'dart:io' as _i7;
 
 final _builders = <_i1.BuilderApplication>[
   _i1.apply(
-    r'ixtrator:codeGeneratorBuilder',
-    [_i2.codeGeneratorBuilder],
+    r'ixtrator:ixtratorGenerator',
+    [_i2.ixtratorBuilder],
     _i1.toRoot(),
     hideOutput: false,
     appliesBuilders: const [r'source_gen:combining_builder'],

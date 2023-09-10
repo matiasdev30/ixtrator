@@ -1,13 +1,13 @@
 targets:
   ixtrator:ixtrator:
     builders:
-      ixtrator|codeGeneratorBuilder:
+      ixtrator|ixtratorGenerator:
         enabled: True
 
 builders:
-  codeGeneratorBuilder:
+  ixtratorGenerator:
     import: 'package:ixtrator/ixtrator.dart'
-    builder_factories: ['codeGeneratorBuilder']
+    builder_factories: ['ixtratorBuilder']
     build_extensions: {".dart":  ["ixtrator.g.part"]}
     build_to: source
     auto_apply: root_package
