@@ -269,6 +269,33 @@ Remember to include a tag, and to follow [Conventional Commits](https://www.conv
 More example:
 
 ```
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'example_usage.dart';
+
+// **************************************************************************
+// IxtratorGenerator
+// **************************************************************************
+
+abstract class IExampleClass<T> {
+  Future<int> multiply(int a, int b);
+  Stream<int> countNumbers(int start, int end);
+  void greet({required String name});
+  void sayHello();
+  Future<String> fetchMessage();
+  Stream<String> generateMessages();
+  Future<int> add(int a, int b);
+  Future<int> subtract(int a, int b);
+  Future<void> performOperations();
+  Future<void> processUserData({required String username, required int age});
+  Future<void> printNumbersInRange(int start, int end);
+  Stream<int> generateNumbersInRange(int start, int end);
+  Future<List<String>> processItems<T>(List<T> items, {String separator = ','});
+  Stream<List<int>> generateRandomLists<T>(List<T> items);
+  Future<Person> createPerson(String name, int age);
+  Stream<Person> generatePeople();
+}
+
 part 'example_usage.g.dart';
 
 @GenerateClassStructure()
@@ -407,32 +434,7 @@ class Person {
 }
 
 
-// GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'example_usage.dart';
-
-// **************************************************************************
-// IxtratorGenerator
-// **************************************************************************
-
-abstract class IExampleClass<T> {
-  Future<int> multiply(int a, int b);
-  Stream<int> countNumbers(int start, int end);
-  void greet({required String name});
-  void sayHello();
-  Future<String> fetchMessage();
-  Stream<String> generateMessages();
-  Future<int> add(int a, int b);
-  Future<int> subtract(int a, int b);
-  Future<void> performOperations();
-  Future<void> processUserData({required String username, required int age});
-  Future<void> printNumbersInRange(int start, int end);
-  Stream<int> generateNumbersInRange(int start, int end);
-  Future<List<String>> processItems<T>(List<T> items, {String separator = ','});
-  Stream<List<int>> generateRandomLists<T>(List<T> items);
-  Future<Person> createPerson(String name, int age);
-  Stream<Person> generatePeople();
-}
 
 
 ```
